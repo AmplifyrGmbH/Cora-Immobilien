@@ -3,7 +3,21 @@ name: Build & Deploy Blog
 on:
   repository_dispatch:
     types: [contentful-publish]
+  schedule:
+    # Fallback: alle 30 Minuten neu bauen, falls der Contentful-Webhook ausfällt
+    - cron: '*/30 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'build-blog.js'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/blog.yml'
   workflow_dispatch:
+
+concurrency:
+  group: blog-deploy
+  cancel-in-progress: false
 
 jobs:
   build-deploy:
