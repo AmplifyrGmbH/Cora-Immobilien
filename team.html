@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Team – CORA Immobilien</title>
   <meta name="description" content="Lernen Sie das Team hinter CORA Immobilien kennen – erfahren, persönlich und leidenschaftlich für Immobilien." />
-  <link rel="preload" href="Bilder/hero-team.jpg" as="image" />
+  <!-- LCP: Hero vorladen (AVIF) + Schrift ohne Umweg ueber das CSS -->
+  <link rel="preload" href="Bilder/hero-team-960.avif" as="image" type="image/avif" fetchpriority="high" />
+  <link rel="preload" href="fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
   <!-- SEO & Social -->
   <link rel="canonical" href="https://cora-immobilien.ch/team">
   <meta name="robots" content="index, follow">
@@ -25,6 +27,16 @@
   <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
   <meta name="theme-color" content="#111111">
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Hero- und Zitatbild als Hintergrund: AVIF/WebP mit JPEG-Fallback */
+    .page-hero-split__right--team { background-image: url('Bilder/hero-team-960.webp'); }
+    .zitat-fokusmensch-bg { background-image: url('Bilder/bild-zitat-fokusmensch-960.webp'); }
+    @supports (background-image: image-set(url('Bilder/hero-team-960.webp') type('image/webp'))) {
+      .page-hero-split__right--team { background-image: image-set(url('Bilder/hero-team-960.avif') type('image/avif'), url('Bilder/hero-team-960.webp') type('image/webp')); }
+      .zitat-fokusmensch-bg { background-image: image-set(url('Bilder/bild-zitat-fokusmensch-960.avif') type('image/avif'), url('Bilder/bild-zitat-fokusmensch-960.webp') type('image/webp')); }
+    }
+  </style>
+  <link rel="preconnect" href="https://cloud.umami.is" crossorigin />
   <!-- Umami Analytics -->
   <script defer src="https://cloud.umami.is/script.js" data-website-id="ec4c3c5c-b059-4c28-a81c-5f80d1fe6c99"></script>
 </head>
@@ -34,7 +46,11 @@
   <nav class="nav nav--light">
     <div class="nav__inner">
       <a href="/" class="nav__logo">
-        <img src="Bilder/logo_transparent_2.png" alt="CORA Immobilien" />
+        <picture>
+          <source type="image/avif" srcset="Bilder/logo-cora-330.avif">
+          <source type="image/webp" srcset="Bilder/logo-cora-330.webp">
+          <img src="Bilder/logo_transparent_2.png" alt="CORA Immobilien" width="613" height="407" fetchpriority="high" />
+        </picture>
       </a>
       <div class="nav__links">
         <a href="/bewirtschaftung" class="nav__link">Bewirtschaftung</a>
@@ -76,12 +92,12 @@
           <a href="/kontakt" style="font-size:0.85rem;font-weight:500;color:var(--gray-500);border-bottom:1px solid var(--gray-300);padding-bottom:1px">Kontakt aufnehmen</a>
         </div>
       </div>
-      <div class="page-hero-split__right" style="background-image: url('Bilder/hero-team.jpg')"></div>
+      <div class="page-hero-split__right page-hero-split__right--team"></div>
     </section>
 
     <!-- Intro Statement -->
     <section style="position:relative;padding:5rem 0;overflow:hidden">
-      <div style="position:absolute;inset:0;background-image:url('Bilder/bild-zitat-fokusmensch');background-size:cover;background-position:center;filter:grayscale(20%) brightness(0.55)"></div>
+      <div class="zitat-fokusmensch-bg" style="position:absolute;inset:0;background-size:cover;background-position:center;filter:grayscale(20%) brightness(0.55)"></div>
       <div style="position:absolute;inset:0;background:rgba(0,0,0,0.25)"></div>
       <div class="container" style="position:relative;z-index:1">
         <div style="text-align:center;max-width:700px;margin:0 auto">
@@ -111,7 +127,11 @@
           <!-- Maxie -->
           <div class="team-member-detail">
             <div class="team-member-detail__photo">
-              <img src="Bilder/Maxie.jpg" alt="Maxie Kücük-Richter" style="object-position: 40% center;" loading="lazy" />
+              <picture>
+                <source type="image/avif" srcset="Bilder/Maxie.avif">
+                <source type="image/webp" srcset="Bilder/Maxie.webp">
+                <img src="Bilder/Maxie.jpg" alt="Maxie Kücük-Richter" style="object-position: 40% center;" width="908" height="604" loading="lazy" decoding="async" />
+              </picture>
             </div>
             <div class="team-member-detail__content">
               <h2 class="team-member-detail__name">Maxie Kücük-Richter</h2>
@@ -160,7 +180,11 @@
           <!-- Thierry -->
           <div class="team-member-detail">
             <div class="team-member-detail__photo">
-              <img src="Bilder/Thierry.jpg" alt="Thierry Gmerek" loading="lazy" />
+              <picture>
+                <source type="image/avif" srcset="Bilder/Thierry.avif">
+                <source type="image/webp" srcset="Bilder/Thierry.webp">
+                <img src="Bilder/Thierry.jpg" alt="Thierry Gmerek" width="908" height="600" loading="lazy" decoding="async" />
+              </picture>
             </div>
             <div class="team-member-detail__content">
               <h2 class="team-member-detail__name">Thierry Gmerek</h2>
@@ -203,7 +227,11 @@
           <!-- Fabienne -->
           <div class="team-member-detail">
             <div class="team-member-detail__photo">
-              <img src="Bilder/Fabienne.jpg" alt="Fabienne Vis" style="object-position: 25% center;" loading="lazy" />
+              <picture>
+                <source type="image/avif" srcset="Bilder/Fabienne.avif">
+                <source type="image/webp" srcset="Bilder/Fabienne.webp">
+                <img src="Bilder/Fabienne.jpg" alt="Fabienne Vis" style="object-position: 25% center;" width="1280" height="853" loading="lazy" decoding="async" />
+              </picture>
             </div>
             <div class="team-member-detail__content">
               <h2 class="team-member-detail__name">Fabienne Vis</h2>
@@ -298,7 +326,7 @@
       <div style="padding:1.75rem 0;border-top:1px solid rgba(0,0,0,0.08);border-bottom:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center;gap:3rem;flex-wrap:wrap">
         <span style="font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400)">Mitgliedschaften & Partner</span>
         <div style="display:flex;align-items:center;gap:2.5rem;flex-wrap:wrap">
-          <img src="Bilder/logo-svit.svg" alt="SVIT Aargau" style="height:36px;opacity:0.55;filter:grayscale(100%)" loading="lazy" />
+          <img src="Bilder/logo-svit.svg" alt="SVIT Aargau" style="height:36px;opacity:0.55;filter:grayscale(100%)" width="273" height="193" loading="lazy" />
           <img src="Bilder/logo-immotop2.png" alt="ImmoTop2" width="40" height="40" style="height:40px;opacity:0.55;filter:grayscale(100%)" loading="lazy" />
         </div>
       </div>

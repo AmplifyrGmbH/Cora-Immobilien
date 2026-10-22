@@ -2,6 +2,16 @@
    CORA Immobilien – Design System
    ============================================= */
 
+/* <picture> waehlt nur das Bildformat aus und soll im Layout nicht mitzaehlen –
+   sonst erbt das <img> seine Groesse vom Wrapper statt vom Container. */
+.hero-full > picture,
+.page-hero-full > picture,
+.nav__logo picture,
+.team-member__photo picture,
+.team-member-detail__photo picture {
+  display: contents;
+}
+
 /* Hanken Grotesk – lokal gehostet, kein externer Request */
 @font-face {
   font-family: 'Hanken Grotesk';
@@ -568,13 +578,20 @@ a:hover .arrow { transform: translateX(4px); }
   content: '';
   position: absolute;
   inset: 0;
-  background-image: var(--card-bg, none);
   background-size: cover;
   background-position: center;
   opacity: 0;
   filter: grayscale(30%) brightness(0.9);
   transition: opacity 0.4s ease;
   z-index: 0;
+}
+
+/* Das Kartenbild wird erst beim Hover sichtbar. Auf Touch-Geraeten gibt es keinen
+   Hover-Zustand, dort wird es deshalb gar nicht erst geladen. */
+@media (hover: hover) {
+  .service-card::before {
+    background-image: var(--card-bg, none);
+  }
 }
 
 .service-card:hover::before {

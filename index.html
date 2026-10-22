@@ -5,8 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CORA Immobilien – Immobilienmanagement mit Herz</title>
   <meta name="description" content="CORA Immobilien bietet professionelles Immobilienmanagement in der Schweiz – persönlich, ehrlich und kompetent. Bewirtschaftung, Vermietung, Verkauf und Beratung." />
-  <link rel="preload" href="Bilder/hero-startseite.jpg" as="image" media="(min-width: 769px)" />
-  <link rel="preload" href="Bilder/hero-startseite-mobile.jpg" as="image" media="(max-width: 768px)" />
+  <!-- LCP: Hero vorladen (AVIF, passende Breite) + Schrift ohne Umweg ueber das CSS -->
+  <link rel="preload" as="image" type="image/avif" fetchpriority="high"
+        imagesrcset="Bilder/hero-startseite-640.avif 640w, Bilder/hero-startseite-960.avif 960w, Bilder/hero-startseite-1280.avif 1280w, Bilder/hero-startseite-1920.avif 1920w"
+        imagesizes="100vw" />
+  <link rel="preload" href="fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
   <!-- SEO & Social -->
   <link rel="canonical" href="https://cora-immobilien.ch/">
   <meta name="robots" content="index, follow">
@@ -27,10 +30,42 @@
   <meta name="theme-color" content="#111111">
   <link rel="stylesheet" href="styles.css" />
   <style>
+    /* Service-Karten: Hintergrund erscheint nur beim Hover, daher kleine Breite in WebP;
+       AVIF, wo der Browser image-set() mit Typangabe versteht */
+    .service-card--bewirtschaftung { --card-bg: url('Bilder/hero-bewirtschaftung-960.webp'); }
+    .service-card--vermietung      { --card-bg: url('Bilder/hero-vermietung-960.webp'); }
+    .service-card--verkauf         { --card-bg: url('Bilder/hero-verkauf-960.webp'); }
+    .service-card--beratung        { --card-bg: url('Bilder/hero-beratung-960.webp'); }
+    .service-card--freelance       { --card-bg: url('Bilder/hero-freelance-960.webp'); }
+    .service-card--kontakt         { --card-bg: url('Bilder/hero-contact-960.webp'); }
+    @supports (background-image: image-set(url('Bilder/hero-contact-960.webp') type('image/webp'))) {
+      .service-card--bewirtschaftung { --card-bg: image-set(url('Bilder/hero-bewirtschaftung-960.avif') type('image/avif'), url('Bilder/hero-bewirtschaftung-960.webp') type('image/webp')); }
+      .service-card--vermietung      { --card-bg: image-set(url('Bilder/hero-vermietung-960.avif') type('image/avif'), url('Bilder/hero-vermietung-960.webp') type('image/webp')); }
+      .service-card--verkauf         { --card-bg: image-set(url('Bilder/hero-verkauf-960.avif') type('image/avif'), url('Bilder/hero-verkauf-960.webp') type('image/webp')); }
+      .service-card--beratung        { --card-bg: image-set(url('Bilder/hero-beratung-960.avif') type('image/avif'), url('Bilder/hero-beratung-960.webp') type('image/webp')); }
+      .service-card--freelance       { --card-bg: image-set(url('Bilder/hero-freelance-960.avif') type('image/avif'), url('Bilder/hero-freelance-960.webp') type('image/webp')); }
+      .service-card--kontakt         { --card-bg: image-set(url('Bilder/hero-contact-960.avif') type('image/avif'), url('Bilder/hero-contact-960.webp') type('image/webp')); }
+    }
+
+    /* Zitatbild als Hintergrund: AVIF/WebP mit JPEG-Fallback, kleinere Datei auf schmalen Viewports */
+    .bild-zitat-bg {
+      background-image: url('Bilder/bild-zitat-heimat.jpg');
+      background-image: image-set(
+        url('Bilder/bild-zitat-heimat-1280.avif') type('image/avif'),
+        url('Bilder/bild-zitat-heimat-1280.webp') type('image/webp'),
+        url('Bilder/bild-zitat-heimat.jpg') type('image/jpeg'));
+    }
     @media (max-width: 768px) {
-      .bild-zitat-bg { background-image: url('Bilder/bild-zitat-heimat-mobile.jpg') !important; }
+      .bild-zitat-bg {
+        background-image: url('Bilder/bild-zitat-heimat-mobile.jpg');
+        background-image: image-set(
+          url('Bilder/bild-zitat-heimat-640.avif') type('image/avif'),
+          url('Bilder/bild-zitat-heimat-640.webp') type('image/webp'),
+          url('Bilder/bild-zitat-heimat-mobile.jpg') type('image/jpeg'));
+      }
     }
   </style>
+  <link rel="preconnect" href="https://cloud.umami.is" crossorigin />
   <!-- Umami Analytics -->
   <script defer src="https://cloud.umami.is/script.js" data-website-id="ec4c3c5c-b059-4c28-a81c-5f80d1fe6c99"></script>
 </head>
@@ -40,7 +75,11 @@
   <nav class="nav">
     <div class="nav__inner">
       <a href="/" class="nav__logo">
-        <img src="Bilder/logo_transparent_2.png" alt="CORA Immobilien" />
+        <picture>
+          <source type="image/avif" srcset="Bilder/logo-cora-330.avif">
+          <source type="image/webp" srcset="Bilder/logo-cora-330.webp">
+          <img src="Bilder/logo_transparent_2.png" alt="CORA Immobilien" width="613" height="407" fetchpriority="high" />
+        </picture>
       </a>
       <div class="nav__links">
         <a href="/bewirtschaftung" class="nav__link">Bewirtschaftung</a>
@@ -70,7 +109,14 @@
 
     <!-- Hero -->
     <section class="hero-full">
-      <img class="hero-full__bg" src="Bilder/hero-startseite.jpg" alt="" aria-hidden="true">
+      <picture>
+        <source type="image/avif" sizes="100vw"
+                srcset="Bilder/hero-startseite-640.avif 640w, Bilder/hero-startseite-960.avif 960w, Bilder/hero-startseite-1280.avif 1280w, Bilder/hero-startseite-1920.avif 1920w">
+        <source type="image/webp" sizes="100vw"
+                srcset="Bilder/hero-startseite-640.webp 640w, Bilder/hero-startseite-960.webp 960w, Bilder/hero-startseite-1280.webp 1280w, Bilder/hero-startseite-1920.webp 1920w">
+        <img class="hero-full__bg" src="Bilder/hero-startseite.jpg" alt="" aria-hidden="true"
+             width="1920" height="1440" fetchpriority="high" decoding="async">
+      </picture>
       <div class="hero-full__overlay"></div>
 
 <div class="hero-full__content">
@@ -106,7 +152,7 @@
         </div>
 
         <div class="services-grid">
-          <a href="/bewirtschaftung" class="service-card" style="--card-bg: url('Bilder/hero-bewirtschaftung.jpg')">
+          <a href="/bewirtschaftung" class="service-card service-card--bewirtschaftung">
             <div class="service-card__number">01</div>
             <h3 class="service-card__title">Bewirtschaftung</h3>
             <p class="service-card__text">
@@ -116,7 +162,7 @@
             <span class="service-card__link">Mehr erfahren <span class="arrow">→</span></span>
           </a>
 
-          <a href="/vermietung" class="service-card" style="--card-bg: url('Bilder/hero-vermietung.jpg')">
+          <a href="/vermietung" class="service-card service-card--vermietung">
             <div class="service-card__number">02</div>
             <h3 class="service-card__title">Vermietung</h3>
             <p class="service-card__text">
@@ -126,7 +172,7 @@
             <span class="service-card__link">Mehr erfahren <span class="arrow">→</span></span>
           </a>
 
-          <a href="/verkauf" class="service-card" style="--card-bg: url('Bilder/hero-verkauf.jpg')">
+          <a href="/verkauf" class="service-card service-card--verkauf">
             <div class="service-card__number">03</div>
             <h3 class="service-card__title">Verkauf</h3>
             <p class="service-card__text">
@@ -136,7 +182,7 @@
             <span class="service-card__link">Mehr erfahren <span class="arrow">→</span></span>
           </a>
 
-          <a href="/beratung" class="service-card" style="--card-bg: url('Bilder/hero-beratung.jpg')">
+          <a href="/beratung" class="service-card service-card--beratung">
             <div class="service-card__number">04</div>
             <h3 class="service-card__title">Beratung & Bauherrenvertretung</h3>
             <p class="service-card__text">
@@ -146,7 +192,7 @@
             <span class="service-card__link">Mehr erfahren <span class="arrow">→</span></span>
           </a>
 
-          <a href="/freelance" class="service-card" style="--card-bg: url('Bilder/hero-freelance.jpg')">
+          <a href="/freelance" class="service-card service-card--freelance">
             <div class="service-card__number">05</div>
             <h3 class="service-card__title">Freelance & Stellvertretung</h3>
             <p class="service-card__text">
@@ -156,7 +202,7 @@
             <span class="service-card__link">Mehr erfahren <span class="arrow">→</span></span>
           </a>
 
-          <a href="/kontakt" class="service-card" style="--card-bg: url('Bilder/hero-contact.avif')">
+          <a href="/kontakt" class="service-card service-card--kontakt">
             <div class="service-card__number">—</div>
             <h3 class="service-card__title">Individuelle Beratung</h3>
             <p class="service-card__text">
@@ -171,7 +217,7 @@
 
     <!-- Philosophie -->
     <section style="position:relative;overflow:hidden;padding:var(--spacing-lg) 0">
-      <div class="bild-zitat-bg" style="position:absolute;inset:0;background-image:url('Bilder/bild-zitat-heimat.jpg');background-size:cover;background-position:center;filter:grayscale(15%) brightness(0.7)"></div>
+      <div class="bild-zitat-bg" style="position:absolute;inset:0;background-size:cover;background-position:center;filter:grayscale(15%) brightness(0.7)"></div>
       <div style="position:absolute;inset:0;background:rgba(0,0,0,0.15)"></div>
       <div class="container" style="position:relative;z-index:1">
         <div style="max-width:800px;margin:0 auto;text-align:center">
@@ -193,7 +239,11 @@
         <div class="team-grid">
           <div class="team-member">
             <div class="team-member__photo">
-              <img src="Bilder/Maxie.jpg" alt="Maxie Kücük-Richter" style="object-position: 40% center;" loading="lazy" />
+              <picture>
+                <source type="image/avif" srcset="Bilder/Maxie.avif">
+                <source type="image/webp" srcset="Bilder/Maxie.webp">
+                <img src="Bilder/Maxie.jpg" alt="Maxie Kücük-Richter" style="object-position: 40% center;" width="908" height="604" loading="lazy" decoding="async" />
+              </picture>
             </div>
             <div class="team-member__name">Maxie Kücük-Richter</div>
             <div class="team-member__role">Immobilienbewirtschafterin mit eidg. FA</div>
@@ -215,7 +265,11 @@
 
           <div class="team-member">
             <div class="team-member__photo">
-              <img src="Bilder/Thierry.jpg" alt="Thierry Gmerek" loading="lazy" />
+              <picture>
+                <source type="image/avif" srcset="Bilder/Thierry.avif">
+                <source type="image/webp" srcset="Bilder/Thierry.webp">
+                <img src="Bilder/Thierry.jpg" alt="Thierry Gmerek" width="908" height="600" loading="lazy" decoding="async" />
+              </picture>
             </div>
             <div class="team-member__name">Thierry Gmerek</div>
             <div class="team-member__role">Projektmanagement & Finanzierung</div>
@@ -237,7 +291,11 @@
 
           <div class="team-member">
             <div class="team-member__photo">
-              <img src="Bilder/Fabienne.jpg" alt="Fabienne Vis" style="object-position: 25% center;" loading="lazy" />
+              <picture>
+                <source type="image/avif" srcset="Bilder/Fabienne.avif">
+                <source type="image/webp" srcset="Bilder/Fabienne.webp">
+                <img src="Bilder/Fabienne.jpg" alt="Fabienne Vis" style="object-position: 25% center;" width="1280" height="853" loading="lazy" decoding="async" />
+              </picture>
             </div>
             <div class="team-member__name">Fabienne Vis</div>
             <div class="team-member__role">Immobilienbewirtschaftung</div>
@@ -267,7 +325,7 @@
       <p class="partners-mobile-strip__text">Geprüfte Qualität – als Mitglied des SVIT Aargau verpflichten wir uns zu höchsten Berufsstandards.</p>
       <span class="partners-mobile-strip__label">Mitgliedschaften & Partner</span>
       <div class="partners-mobile-strip__logos">
-        <img src="Bilder/logo-svit.svg" alt="SVIT Aargau" />
+        <img src="Bilder/logo-svit.svg" alt="SVIT Aargau" width="273" height="193" />
         <img src="Bilder/logo-immotop2.png" alt="ImmoTop2" width="40" height="40" style="height:40px" />
       </div>
     </section>
@@ -326,7 +384,7 @@
       <div style="padding:1.75rem 0;border-top:1px solid rgba(0,0,0,0.08);border-bottom:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center;gap:3rem;flex-wrap:wrap">
         <span style="font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400)">Mitgliedschaften & Partner</span>
         <div style="display:flex;align-items:center;gap:2.5rem;flex-wrap:wrap">
-          <img src="Bilder/logo-svit.svg" alt="SVIT Aargau" style="height:36px;opacity:0.55;filter:grayscale(100%)" loading="lazy" />
+          <img src="Bilder/logo-svit.svg" alt="SVIT Aargau" style="height:36px;opacity:0.55;filter:grayscale(100%)" width="273" height="193" loading="lazy" />
           <img src="Bilder/logo-immotop2.png" alt="ImmoTop2" width="40" height="40" style="height:40px;opacity:0.55;filter:grayscale(100%)" loading="lazy" />
         </div>
       </div>

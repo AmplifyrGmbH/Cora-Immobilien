@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Impressum – CORA Immobilien</title>
   <meta name="description" content="Impressum der CORA Immobilien GmbH." />
+  <!-- Schrift ohne Umweg ueber das CSS laden -->
+  <link rel="preload" href="fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="canonical" href="https://cora-immobilien.ch/impressum">
   <meta name="robots" content="noindex, follow">
   <!-- Favicon -->
@@ -13,6 +15,7 @@
   <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
   <meta name="theme-color" content="#111111">
   <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://cloud.umami.is" crossorigin />
   <!-- Umami Analytics -->
   <script defer src="https://cloud.umami.is/script.js" data-website-id="ec4c3c5c-b059-4c28-a81c-5f80d1fe6c99"></script>
 </head>
@@ -22,7 +25,11 @@
   <nav class="nav nav--light">
     <div class="nav__inner">
       <a href="/" class="nav__logo">
-        <img src="Bilder/logo_transparent_2.png" alt="CORA Immobilien" />
+        <picture>
+          <source type="image/avif" srcset="Bilder/logo-cora-330.avif">
+          <source type="image/webp" srcset="Bilder/logo-cora-330.webp">
+          <img src="Bilder/logo_transparent_2.png" alt="CORA Immobilien" width="613" height="407" fetchpriority="high" />
+        </picture>
       </a>
       <div class="nav__links">
         <a href="/bewirtschaftung" class="nav__link">Bewirtschaftung</a>
@@ -155,7 +162,7 @@
       <div style="padding:1.75rem 0;border-top:1px solid rgba(0,0,0,0.08);border-bottom:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center;gap:3rem;flex-wrap:wrap">
         <span style="font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400)">Mitgliedschaften & Partner</span>
         <div style="display:flex;align-items:center;gap:2.5rem;flex-wrap:wrap">
-          <img src="Bilder/logo-svit.svg" alt="SVIT Aargau" style="height:36px;opacity:0.55;filter:grayscale(100%)" loading="lazy" />
+          <img src="Bilder/logo-svit.svg" alt="SVIT Aargau" style="height:36px;opacity:0.55;filter:grayscale(100%)" width="273" height="193" loading="lazy" />
           <img src="Bilder/logo-immotop2.png" alt="ImmoTop2" width="40" height="40" style="height:40px;opacity:0.55;filter:grayscale(100%)" loading="lazy" />
         </div>
       </div>
